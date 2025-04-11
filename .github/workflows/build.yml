@@ -1,0 +1,27 @@
+name: Build Forge Mod
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: Build with Gradle
+        run: ./gradlew build
+
+      - name: Upload Jar
+        uses: actions/upload-artifact@v2
+        with:
+          name: prun-mod
+          path: build/libs/*.jar
